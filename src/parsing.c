@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 16:17:54 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/02/02 19:52:09 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/02/20 00:58:13 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,76 @@ void	add_command_to_array(char **argv, int i, t_struct *s_pipex)
 	}
 }
 
-int	check_path(char **env, t_struct *s_pipex)
+int	count_path_strings(t_struct *s_pipex)
 {
 	int	i;
+	
+	i = 0;
+	if (s_pipex->path)
+		while (s_pipex->path)
+			i++;
+	return (i);
+}
+
+char	**put_str_to_arr(char **arr, int size, char *s)
+{
+	int		i;
+	char	**res;
+
+	if (arr && s)
+	{
+		res = malloc(sizeof(char *) * (size + 1) + 1);
+		if (!res)
+			return (NULL);
+		i = 0;
+		while (arr[i++])
+			res[i] = arr[i];
+		res[i] = s;
+		i++;
+		res[i] = NULL;
+		free (arr);
+		return (res);
+	}
+	else if (s && !arr)
+	{
+		if (!(res = malloc(sizeof(char *) + 1)))
+			return (NULL);
+		res[0] = s;
+		res[1] = NULL;
+		free (arr);
+		return (res);
+	}
+	return (NULL);
+}
+
+int	check_path(char **env, t_struct *s_pipex)
+{
+	int		i;
 	char	*temp;
+	int		pos;
 
 	i = 0;
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], "PATH=", 5))
+		if (!ft_strncmp(env[i], "PATH=", 5) || !ft_strncmp(env[i], "PWD=", 4))
 		{
-			temp = ft_strchr(env[i], '/');
-			if (!temp)
-				return (1);
-			if (!(s_pipex->path = ft_split(temp, ':')))
-				return (1);
-			return (0);
+			if (!ft_strncmp(env[i], "PATH=", 5))
+			{
+				temp = ft_strchr(env[i], '/');
+				if (!temp)
+					return (1);
+				if (!(s_pipex->path = ft_split(temp, ':')))
+					return (1);
+				// return (0);
+			}
+			if (!ft_strncmp(env[i], "PWD=", 4))
+			{
+				temp = ft_strchr(env[i], '/');
+				if (!temp)
+					return (1);
+				pos = count_path_strings(s_pipex);
+				s_pipex->path = put_str_to_arr(s_pipex->path, pos, temp);
+			}
 		}
 		i++;
 	}
@@ -60,7 +114,7 @@ void	execute_command(t_struct *s_pipex, char **env)
 		res_path = ft_strjoin(res_path, s_pipex->cmd1[0]);
 		if (!access(res_path, F_OK))
 			execve(res_path, s_pipex->cmd1, env);
-		printf("%s\n", res_path);
+		// printf("%s\n", res_path);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:42:26 by rsenelle          #+#    #+#             */
-/*   Updated: 2021/10/14 21:55:51 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/02/03 20:00:17 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static char	**ft_putstring(int k, char const *s, char c, char **res)
 		i++;
 	}
 	res[numstr] = NULL;
+	res[numstr + 1] = NULL;
 	return (res);
 }
 
@@ -82,7 +83,7 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	res = (char **)malloc((sizeof(char *) * (ft_kolvoslov(s, c) + 1)));
+	res = (char **)malloc((sizeof(char *) * (ft_kolvoslov(s, c) + 2)));
 	if (!res)
 		return (NULL);
 	res = ft_putstring(ft_kolvoslov(s, c), s, c, res);
