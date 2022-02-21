@@ -1,38 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/30 16:46:54 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/02/20 11:39:51 by rsenelle         ###   ########.fr       */
+/*   Created: 2022/02/20 16:55:26 by rsenelle          #+#    #+#             */
+/*   Updated: 2022/02/20 17:39:47 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_error(char *s)
+int	pipe_handle(int fd[2], t_struct *s_pipex)
 {
-	if (!s)
-		ft_putendl_fd("Error", 2);
-	else
-	{
-		ft_putendl_fd("Error", 2);
-		ft_putendl_fd(s, 2);
-	}
-	exit(1);
+
+	if (dup2(fd[0], 0) == -1)
+		perror("Error");
 }
-
-// int	check_space(char *s)
-// {
-// 	int i = 0;
-// 	while (s[i])
-// 	{
-// 		if (s[i] == ' ')
-// 			return (1);
-// 		i++;
-// 	}
-
-// 	return (0);
-// }

@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   free_buf.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/30 16:46:54 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/02/20 11:39:51 by rsenelle         ###   ########.fr       */
+/*   Created: 2022/02/20 11:39:56 by rsenelle          #+#    #+#             */
+/*   Updated: 2022/02/20 11:44:17 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_error(char *s)
+void	free_buf(char **buf)
 {
-	if (!s)
-		ft_putendl_fd("Error", 2);
-	else
+	int	i;
+
+	i = 0;
+	if (!buf)
+	 return ;
+	while (buf[i])
 	{
-		ft_putendl_fd("Error", 2);
-		ft_putendl_fd(s, 2);
+	 free (buf[i]);
+	 buf[i] = NULL;
+	 i++;
 	}
-	exit(1);
+	free(buf);
+	buf = NULL;
 }
-
-// int	check_space(char *s)
-// {
-// 	int i = 0;
-// 	while (s[i])
-// 	{
-// 		if (s[i] == ' ')
-// 			return (1);
-// 		i++;
-// 	}
-
-// 	return (0);
-// }

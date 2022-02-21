@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 16:18:36 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/02/02 19:36:42 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/02/20 16:41:22 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	add_command_to_array(char **argv, int i, t_struct *s_pipex);
 int		check_space(char *s);
 void	init_struct(t_struct *s_pipex);
 int		check_path(char **env, t_struct *s_pipex);
-int		redirect_input_file(char **argv, t_struct *s_pipex, char **env);
+int		left_redirect_input_file(char **argv, t_struct *s_pipex, char **env);
 void	execute_command(t_struct *s_pipex, char **env);
+void	free_buf(char **buf);
 
 #endif
