@@ -22,9 +22,10 @@
 
 typedef struct s_pipex
 {
-	char	**cmd1;
+	char	**cmd;
 	char	**cmd2;
 	char	**path;
+	int		fd[2];
 }			t_struct;
 
 void	ft_error(char *s);

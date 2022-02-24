@@ -16,7 +16,7 @@ void	add_command_to_array(char **argv, int i, t_struct *s_pipex)
 {
 	if (i == 2)
 	{
-		if(!(s_pipex->cmd1 = ft_split(argv[i], ' ')))
+		if(!(s_pipex->cmd = ft_split(argv[i], ' ')))
 			ft_error("Split error 1");
 	}
 	else if (i == 3)
@@ -80,17 +80,17 @@ void	execute_command(t_struct *s_pipex, char **env)
 	char	*res_path;
 
 	i = 0;
-		// if (dup2(fd[1], 1) == -1)
-		// perror("Error");
+
 	while (s_pipex->path[i])
 	{
 		res_path = ft_strjoin(s_pipex->path[i], "/");
-		res_path = ft_strjoin(res_path, s_pipex->cmd1[0]);
+		res_path = ft_strjoin(res_path, s_pipex->cmd[0]);
 		if (!access(res_path, F_OK))
-			if (execve(res_path, s_pipex->cmd1, env))
+			if (execve(res_path, s_pipex->cmd, env))
 				perror("Error");
 		i++;
 	}
+
 }
 
 int	left_redirect_input_file(char **argv, t_struct *s_pipex, char **env)
@@ -109,7 +109,39 @@ int	left_redirect_input_file(char **argv, t_struct *s_pipex, char **env)
 		if (dup2(fd, 0) == -1)
 			perror("Error");
 		close(fd);
+		if (dup2(s_pipex->fd[1], 1) == -1)
+			perror("Error");
+		close (s_pipex->fd[1]);
+		close (s_pipex->fd[0]);
 		execute_command(s_pipex, env);
+		free_buf(s_pipex->cmd);
+	}
+	waitpid(pid, NULL, 0);
+	return (0);
+}
+
+int	right_redirect_output_file(char **argv, t_struct *s_pipex,char **env)
+{
+	int		fd;
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if ((fd = open(argv[4], O_WRONLY|O_TRUNC|O_CREAT)) < 0)
+		{
+			perror("Error");
+			exit (1);
+		}
+
+		if (dup2(s_pipex->fd[0], fd) == -1)
+			perror("Error");
+		close(fd);
+		close(s_pipex->fd[0]);
+		close(s_pipex->fd[1]);
+		execute_command(s_pipex, env);
+		free_buf(s_pipex->cmd);
+
 	}
 	waitpid(pid, NULL, 0);
 	return (0);
@@ -119,23 +151,28 @@ int	main(int argc, char **argv, char **env)
 {
 	int			i;
 	t_struct	s_pipex;
-	int			fd[2];
+	// char		*s;
 
 	i = 0;
 	// init_struct(&s_pipex);
-	if (argc == 5)
+	if (argc == 5 || argc == 3)
 	{
 		add_command_to_array(argv, 2, &s_pipex);
 		// add_command_to_array(argv, 3, &s_pipex);
 		if (check_path(env, &s_pipex))
 			ft_error("No PATH");
-		if (pipe(fd) == -1)
+		if (pipe(s_pipex.fd) == -1)
 			perror("Error");
 		left_redirect_input_file(argv, &s_pipex, env);
-
+		right_redirect_output_file(argv, &s_pipex, env);
+		close(s_pipex.fd[1]);
+		close(s_pipex.fd[0]);
+		// s = NULL;
+		// read(s_pipex.fd[0], s, 2);
+		// write(1, s, 2);
 	}
 	
-	// char *str[n];
+	// char *str[n]
 	// str[0] = "ls";
 	// str[1] = "-l";
 	// str[2] = NULL;
