@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "pipex.h"
+//#include "../include/pipex.h"
 
 // void	init_struct(t_struct *s_pipex)
 // {

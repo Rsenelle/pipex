@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 16:17:54 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/02/20 19:05:40 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/02/27 14:24:44 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,10 @@ void	execute_command(t_struct *s_pipex, char **env)
 	{
 		res_path = ft_strjoin(s_pipex->path[i], "/");
 		res_path = ft_strjoin(res_path, s_pipex->cmd[0]);
-		if (!access(res_path, F_OK))
+		int l = access(res_path, 0|1);
+		if (!l)
 			if (execve(res_path, s_pipex->cmd, env))
-				perror("Error");
+				perror("Error7");
 		i++;
 	}
 
@@ -103,18 +104,17 @@ int	left_redirect_input_file(char **argv, t_struct *s_pipex, char **env)
 	{
 		if ((fd = open(argv[1], O_RDONLY)) < 0)
 		{
-			perror("Error");
+			perror("Error2");
 			exit (1);
 		}
 		if (dup2(fd, 0) == -1)
-			perror("Error");
+			perror("Error5");
 		close(fd);
 		if (dup2(s_pipex->fd[1], 1) == -1)
-			perror("Error");
+			perror("Error6");
 		close (s_pipex->fd[1]);
 		close (s_pipex->fd[0]);
 		execute_command(s_pipex, env);
-		free_buf(s_pipex->cmd);
 	}
 	waitpid(pid, NULL, 0);
 	return (0);
@@ -123,27 +123,28 @@ int	left_redirect_input_file(char **argv, t_struct *s_pipex, char **env)
 int	right_redirect_output_file(char **argv, t_struct *s_pipex,char **env)
 {
 	int		fd;
-	pid_t	pid;
+//	pid_t	pid;
 
-	pid = fork();
-	if (pid == 0)
-	{
-		if ((fd = open(argv[4], O_WRONLY|O_TRUNC|O_CREAT)) < 0)
+//	pid = fork();
+//	if (pid == 0)
+//	{
+		if ((fd = open(argv[4], O_CREAT|O_WRONLY|O_TRUNC, 0777)) < 0)
 		{
-			perror("Error");
+			printf("%s", argv[4]);
+			perror("Error1");
 			exit (1);
 		}
-
-		if (dup2(s_pipex->fd[0], fd) == -1)
-			perror("Error");
+		if (dup2(s_pipex->fd[0], 0) == -1)
+			perror("Error3");
+		if (dup2(fd, 1) == -1)
+			perror("Error4");
 		close(fd);
 		close(s_pipex->fd[0]);
 		close(s_pipex->fd[1]);
+		s_pipex->cmd[0] = ft_strdup("cat");
 		execute_command(s_pipex, env);
-		free_buf(s_pipex->cmd);
-
-	}
-	waitpid(pid, NULL, 0);
+//	}
+//	waitpid(pid, NULL, 0);
 	return (0);
 }
 
@@ -164,7 +165,9 @@ int	main(int argc, char **argv, char **env)
 		if (pipe(s_pipex.fd) == -1)
 			perror("Error");
 		left_redirect_input_file(argv, &s_pipex, env);
+		free_buf(s_pipex.cmd);
 		right_redirect_output_file(argv, &s_pipex, env);
+		// free_buf(s_pipex.cmd);
 		close(s_pipex.fd[1]);
 		close(s_pipex.fd[0]);
 		// s = NULL;

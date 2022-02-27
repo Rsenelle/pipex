@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../include/pipex.h"
 
 int	pipe_handle(int fd[2], t_struct *s_pipex)
 {
 
 	if (dup2(fd[0], 0) == -1)
 		perror("Error");
+	return 0;
 }
