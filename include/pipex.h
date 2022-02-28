@@ -23,13 +23,14 @@
 typedef struct s_pipex
 {
 	char	**cmd;
-	char	**cmd2;
 	char	**path;
 	int		fd[2];
+	int 	fd_input;
+	int		fd_output;
 }			t_struct;
 
 void	ft_error(char *s);
-void	add_command_to_array(char **argv, int i, t_struct *s_pipex);
+void	add_command_to_array(char *argv, t_struct *s_pipex);
 int		check_space(char *s);
 void	init_struct(t_struct *s_pipex);
 int		check_path(char **env, t_struct *s_pipex);
