@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 11:39:56 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/02/20 11:44:17 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/03/03 23:05:09 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	free_buf(char **buf)
 
 	i = 0;
 	if (!buf)
-	 return ;
+		return ;
 	while (buf[i])
 	{
-	 free (buf[i]);
-	 buf[i] = NULL;
-	 i++;
+		free (buf[i]);
+		buf[i] = NULL;
+		i++;
 	}
 	free(buf);
 	buf = NULL;

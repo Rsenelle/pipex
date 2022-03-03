@@ -11,6 +11,6 @@ FILE(GLOB SRC
 
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall")
-add_executable(pipex ${SRC} src/check_path.c)
+add_executable(pipex ${SRC} src/check_path.c src/main.c)
 target_link_libraries (pipex ${CMAKE_CURRENT_SOURCE_DIR}/libft/libft.a)
 

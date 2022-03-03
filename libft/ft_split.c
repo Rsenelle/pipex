@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 19:42:26 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/02/03 20:00:17 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/03/03 22:01:07 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static char	**ft_putstring(int k, char const *s, char c, char **res)
 		i++;
 	}
 	res[numstr] = NULL;
-	res[numstr + 1] = NULL;
 	return (res);
 }
 

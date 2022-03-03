@@ -37,11 +37,11 @@ LIBR = ranlib
 RM	= rm -f
 
 .c.o:	${HEADER}
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o} -I ${HEADER}
+	@echo ''`${CC} ${FLAGS} -c $< -o ${<:.c=.o} -I ${HEADER}`'\n'
 
 ${NAME}: ${OBJ} ${HEADER}
-	${LIBC} ${NAME} ${OBJ}
-	${LIBR} ${NAME}
+	@echo ''`${LIBC} ${NAME} ${OBJ}`'\n'
+	@echo ''`${LIBR} ${NAME}`''
 
 all: ${NAME}
 
@@ -49,10 +49,10 @@ bonus:		${OBJ_BONUS}
 			${LIBC} ${NAME} ${OBJ_BONUS}
 
 clean:
-	${RM} ${OBJ} ${OBJ_BONUS}
+	@echo ''`${RM} ${OBJ} ${OBJ_BONUS}`'\n'
 
 fclean: clean
-	${RM} ${NAME} ${OBJ_BONUS}
+	@echo ''`${RM} ${NAME} ${OBJ_BONUS}`'\n'
 
 re: fclean all
 

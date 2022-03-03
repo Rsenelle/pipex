@@ -12,7 +12,7 @@
 
 NAME		=	pipex
 
-SRCS_F		=	parsing.c		utils.c		init_struct.c
+SRCS_F		=	main.c		check_path.c		utils.c
 
 SRCS_D		=	src/
 
@@ -22,29 +22,29 @@ OBJS		=	$(SRCS:.c=.o)
 
 CC			=	gcc
 
-CFLAGS		=	-Wall -Wextra -Werror -MMD -g
+CFLAGS		=	-Wall -Werror -Wextra -MMD -g
 
 SRCS		=	$(addprefix $(SRCS_D),$(SRCS_F))
 
 LIBFT		=	./libft/libft.a
 
 $(NAME)		:	$(OBJS)
-				$(MAKE) -C $(dir $(LIBFT))
-				$(CC) $(CFLAGS) $(INCLUDE) $(LIBFT) $(OBJS) -o $(NAME)
+				@echo 'Compiling...'`$(MAKE) -C $(dir $(LIBFT))`'\n'
+				@echo 'Done'`$(CC) $(CFLAGS) $(INCLUDE) $(LIBFT) $(OBJS) -o $(NAME)`''
 
 
 all		:	$(NAME)
 
 %.o		:	%.c
-			$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+			@echo 'Compiling...'`$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@`''
 
 clean	:	
-			$(MAKE) clean -C $(dir $(LIBFT))
-			rm -rf $(OBJS) $(OBJS:.o=.d)
+			@echo 'Deleting...'`$(MAKE) clean -C $(dir $(LIBFT))`''
+			@echo ''`rm -rf $(OBJS) $(OBJS:.o=.d)`''
 
 fclean	:	clean
-			$(MAKE) fclean -C $(dir $(LIBFT))
-			rm -rf $(NAME)
+			@echo ''`$(MAKE) fclean -C $(dir $(LIBFT))`''
+			@echo 'Deleted all'`rm -rf $(NAME)`''
 
 re		:	fclean all
 
