@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 16:18:36 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/03/09 20:28:28 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/03/09 21:05:26 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,9 @@ int		is_has_linebreak(char *str);
 char	*trim_linebreak(char *str);
 int		check_reading(int *read_sym, char *buff);
 void	free_ost(char **ost);
+void	child_process(t_struct *s_pipex, char **env);
+void	parent_process(t_struct *s_pipex);
+void	last_command(t_struct *s_pipex, char **argv, int argc, char **env);
+void	change_fd(char **argv, int argc, t_struct *s_pipex);
 
 #endif

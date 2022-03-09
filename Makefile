@@ -6,13 +6,13 @@
 #    By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/30 16:31:25 by rsenelle          #+#    #+#              #
-#    Updated: 2022/03/09 19:13:59 by rsenelle         ###   ########.fr        #
+#    Updated: 2022/03/09 21:05:40 by rsenelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	pipex
 
-SRCS_F		=	main.c				check_path.c		utils.c		\
+SRCS_F		=	main.c				check_path.c		utils.c		pipex.c\
 				bonus_heredoc.c		get_next_line.c		get_next_line_utils.c
 
 SRCS_D		=	src/
