@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 19:46:48 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/03/03 22:45:41 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:44:11 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	child_process(t_struct *s_pipex, char **env)
 
 void	parent_process(t_struct *s_pipex)
 {
+	wait(0);
 	close(s_pipex->fd[1]);
 	free_buf(s_pipex->cmd);
 	if (dup2(s_pipex->fd[0], 0) < 0)
@@ -38,8 +39,16 @@ void	last_command(t_struct *s_pipex, char **argv, int argc, char **env)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (dup2(s_pipex->fd_output, 1) < 0)
-			ft_perror("Error3");
+		if (s_pipex->fd_here)
+		{
+			if (dup2(s_pipex->fd_here, 1) < 0)
+				ft_perror("Error3");
+		}
+		else
+		{
+			if (dup2(s_pipex->fd_output, 1) < 0)
+				ft_perror("Error3");
+		}
 		execute_command(s_pipex, env);
 	}
 }
@@ -66,12 +75,16 @@ int	main(int argc, char **argv, char **env)
 	int			i;
 	int			pid;
 
+	i = 2;
 	if (argc <= 4)
 		ft_error("Wrong arguments");
 	init_struct(&s_pipex);
+	s_pipex.flag = check_heredoc(argv, argc, &s_pipex);
 	check_path(env, &s_pipex);
-	change_fd(argv, argc, &s_pipex);
-	i = 2;
+	if (s_pipex.flag != 0)
+		change_fd(argv, argc, &s_pipex);
+	else
+		i++;
 	while (i < argc - 2)
 	{
 		add_command_to_array(argv[i], &s_pipex);
