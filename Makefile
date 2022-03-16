@@ -6,38 +6,48 @@
 #    By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/30 16:31:25 by rsenelle          #+#    #+#              #
-#    Updated: 2022/03/09 21:05:40 by rsenelle         ###   ########.fr        #
+#    Updated: 2022/03/12 21:22:29 by rsenelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	pipex
+NAME			=	pipex
 
-SRCS_F		=	main.c				check_path.c		utils.c		pipex.c\
-				bonus_heredoc.c		get_next_line.c		get_next_line_utils.c
+NAME_BONUS		=	pipex_bonus
 
-SRCS_D		=	src/
+SRCS_F			=	main.c				check_path.c		utils.c		pipex.c\
+					heredoc.c		get_next_line.c		get_next_line_utils.c
 
-INCLUDE		=	-I./include/ -I./libft/
+SRCS_D			=	src/
 
-OBJS		=	$(SRCS:.c=.o)
+INCLUDE			=	-I./include/ -I./libft/
 
-CC			=	gcc
+OBJS			=	$(SRCS:.c=.o)
 
-CFLAGS		=	-Wall -Werror -Wextra -MMD -g
+CC				=	gcc
 
-SRCS		=	$(addprefix $(SRCS_D),$(SRCS_F))
+CFLAGS			=	-Wall -Werror -Wextra -MMD -g
 
-LIBFT		=	./libft/libft.a
+SRCS			=	$(addprefix $(SRCS_D),$(SRCS_F))
 
-$(NAME)		:	$(OBJS)
-				@echo 'Compiling...'`$(MAKE) -C $(dir $(LIBFT))`'\n'
-				@echo 'Done'`$(CC) $(CFLAGS) $(INCLUDE) $(LIBFT) $(OBJS) -o $(NAME)`''
+LIBFT			=	./libft/libft.a
 
+$(NAME)			:	$(OBJS) libft
+					@echo 'Done'`$(CC) $(CFLAGS) $(INCLUDE) $(LIBFT) $(OBJS) -o $(NAME)`''
+
+$(NAME_BONUS)	:	$(OBJS) libft
+					@echo 'Compiling...'`$(MAKE) -C $(dir $(LIBFT))`'\n'
+					@echo 'Done'`$(CC) $(CFLAGS) $(INCLUDE) $(LIBFT) $(OBJS) -o $(NAME_BONUS)`''
 
 all		:	$(NAME)
 
+libft	:
+			@echo 'Compiling...'`$(MAKE) -C $(dir $(LIBFT))`'\n'
+	
+
 %.o		:	%.c
 			@echo 'Compiling...'`$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@`''
+
+bonus	:	$(NAME_BONUS)
 
 clean	:	
 			@echo 'Deleting...'`$(MAKE) clean -C $(dir $(LIBFT))`''
@@ -45,10 +55,10 @@ clean	:
 
 fclean	:	clean
 			@echo ''`$(MAKE) fclean -C $(dir $(LIBFT))`''
-			@echo 'Deleted all'`rm -rf $(NAME)`''
+			@echo 'Deleted all'`rm -rf $(NAME) $(NAME_BONUS)`''
 
 re		:	fclean all
 
-.PHONY	:	all clean fclean re bonus
+.PHONY	:	all clean fclean re bonus libft
 
 -include	$(OBJS:.o=.d)

@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 21:02:32 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/03/09 21:03:15 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:07:47 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void	fork_main(t_struct *s_pipex, char **env)
 {
-	int	pid;
-
-	pid = fork();
-	if (pid < 0)
+	s_pipex->pid_cmd1 = fork();
+	if (s_pipex->pid_cmd1 < 0)
 		ft_perror(NULL);
-	if (pid == 0)
+	if (s_pipex->pid_cmd1 == 0)
 		child_process(s_pipex, env);
 	parent_process(s_pipex);
 }
@@ -42,6 +40,8 @@ int	main(int argc, char **argv, char **env)
 	while (i < argc - 2)
 	{
 		add_command_to_array(argv[i], &s_pipex);
+		if (!s_pipex.cmd[0])
+			ft_error("command not found");
 		if (pipe(s_pipex.fd) < 0)
 			perror("Error");
 		fork_main(&s_pipex, env);

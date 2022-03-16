@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bonus_heredoc.c                                    :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 16:06:38 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/03/09 20:45:51 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/03/12 21:14:44 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	heredoc_main(char *limiter)
 
 void	heredoc(char **argv, int argc, t_struct *s_pipex)
 {
-	s_pipex->fd_here = open(argv[argc - 1], O_CREAT | O_RDWR | O_APPEND, 0777);
+	s_pipex->fd_here = open(argv[argc - 1], O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (s_pipex->fd_here < 0)
 		ft_perror("Error");
 	heredoc_main(argv[2]);

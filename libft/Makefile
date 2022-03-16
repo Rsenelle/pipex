@@ -6,7 +6,7 @@
 #    By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/06 17:21:43 by rsenelle          #+#    #+#              #
-#    Updated: 2022/02/20 11:41:39 by rsenelle         ###   ########.fr        #
+#    Updated: 2022/03/11 14:05:10 by rsenelle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRC	=	ft_atoi.c			ft_bzero.c			ft_calloc.c\
 		ft_strlcpy.c		ft_strlen.c			ft_strmapi.c\
 		ft_strncmp.c		ft_strnstr.c		ft_strrchr.c\
 		ft_strtrim.c		ft_substr.c			ft_tolower.c\
-		ft_split.c			add_str_to_arr.c	free_buf.c
+		ft_split.c			add_str_to_arr.c	free_buf.c\
+		ft_arrlen.c
 
 FILES_BONUS =	ft_lstnew_bonus.c		ft_lstadd_front_bonus.c		ft_lstsize_bonus.c\
 				ft_lstlast_bonus.c		ft_lstadd_back_bonus.c		ft_lstdelone_bonus.c\

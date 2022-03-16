@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 20:47:29 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/02/20 11:40:37 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/03/11 14:05:37 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 char	**add_str_to_arr(char **arr, int size, char *s);
 void	free_buf(char **buf);
+int		ft_arrlen(char **arr);
+
 
 #endif

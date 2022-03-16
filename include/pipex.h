@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 16:18:36 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/03/09 21:05:26 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:07:05 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_pipex
 	int		fd_output;
 	int		flag;
 	int		fd_here;
+	int		pid_cmd1;
 }			t_struct;
 
 void	ft_error(char *s);

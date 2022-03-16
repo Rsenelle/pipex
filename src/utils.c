@@ -6,7 +6,7 @@
 /*   By: rsenelle <rsenelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 16:46:54 by rsenelle          #+#    #+#             */
-/*   Updated: 2022/03/09 21:05:56 by rsenelle         ###   ########.fr       */
+/*   Updated: 2022/03/11 14:30:06 by rsenelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	execute_command(t_struct *s_pipex, char **env)
 	if (!access(s_pipex->cmd[0], 0 | 1))
 	{
 		if (execve(s_pipex->cmd[0], s_pipex->cmd, env))
-			perror("Error10");
+			perror("Error");
 	}
 	else
 	{
@@ -30,11 +30,14 @@ void	execute_command(t_struct *s_pipex, char **env)
 			res_path = ft_strjoin(s_pipex->path[i], "/");
 			res_path = ft_strjoin(res_path, s_pipex->cmd[0]);
 			if (!access(res_path, 0 | 1))
-				if (execve(res_path, s_pipex->cmd, env))
-					perror("Error7");
+				break ;
 			i++;
 		}
-		ft_error("command not found");
+		if (i == ft_arrlen(s_pipex->path))
+			ft_error("command not found");
+		else
+			if (execve(res_path, s_pipex->cmd, env))
+				perror("Error");
 	}
 }
 
